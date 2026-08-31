@@ -43,21 +43,20 @@ document.addEventListener("DOMContentLoaded", () => {
   /* Capa (cover) — some suavemente ao rolar a tela */
   const cover = document.getElementById("siteCover");
   if (cover) {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const threshold = 8; // px de rolagem para começar a sumir
-    let hideTimeout;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const updateCover = () => {
       const shouldFade = window.scrollY > threshold;
       cover.classList.toggle("is-fading", shouldFade);
-
-      clearTimeout(hideTimeout);
-      if (shouldFade) {
-        hideTimeout = setTimeout(() => cover.classList.add("is-hidden"), reduceMotion ? 0 : 650);
-      } else {
-        cover.classList.remove("is-hidden");
-      }
+      if (!shouldFade) cover.classList.remove("is-hidden");
     };
+
+    cover.addEventListener("transitionend", (event) => {
+      if (event.propertyName === "opacity" && cover.classList.contains("is-fading")) {
+        cover.classList.add("is-hidden");
+      }
+    });
 
     updateCover();
     window.addEventListener("scroll", updateCover, { passive: true });

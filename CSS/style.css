@@ -243,6 +243,7 @@ button { font-family: inherit; cursor: pointer; }
 .site-cover.is-fading {
   opacity: 0;
   transform: translateY(-3%) scale(0.97);
+  pointer-events: none;
 }
 .site-cover.is-hidden {
   visibility: hidden;
