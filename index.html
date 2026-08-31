@@ -27,6 +27,19 @@
     role para explorar
   </div>
 </div>
+<script>
+  (function () {
+    try {
+      if (sessionStorage.getItem("siteCoverSeen")) {
+        document.getElementById("siteCover").classList.add("is-skipped");
+      } else {
+        sessionStorage.setItem("siteCoverSeen", "1");
+      }
+    } catch (e) {
+      /* sessionStorage indisponível (ex.: modo privado restrito) — capa aparece normalmente */
+    }
+  })();
+</script>
 
 <a class="skip-link" href="#inicio">Pular para o conteúdo</a>
 
