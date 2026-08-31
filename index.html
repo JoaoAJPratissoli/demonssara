@@ -14,33 +14,6 @@
 </head>
 <body>
 
-<!-- ===================== CAPA ===================== -->
-<div class="site-cover" id="siteCover" aria-hidden="true">
-  <canvas class="site-cover-canvas" id="coverCanvas"></canvas>
-  <div class="site-cover-content" id="siteCoverContent">
-    <span class="site-cover-monogram">SG</span>
-    <span class="site-cover-script">𝒮𝒶𝓇𝒶 𝒢ℴ𝓁𝒹𝓃ℯ𝓇</span>
-    <span class="site-cover-subtitle">Graduanda em Direito</span>
-  </div>
-  <div class="site-cover-scroll">
-    <span></span>
-    role para explorar
-  </div>
-</div>
-<script>
-  (function () {
-    try {
-      if (sessionStorage.getItem("siteCoverSeen")) {
-        document.getElementById("siteCover").classList.add("is-skipped");
-      } else {
-        sessionStorage.setItem("siteCoverSeen", "1");
-      }
-    } catch (e) {
-      /* sessionStorage indisponível (ex.: modo privado restrito) — capa aparece normalmente */
-    }
-  })();
-</script>
-
 <a class="skip-link" href="#inicio">Pular para o conteúdo</a>
 
 <!-- ===================== NAV ===================== -->
@@ -86,24 +59,27 @@
 
 <main>
 
-  <!-- ===================== HOME ===================== -->
+  <!-- ===================== HOME / BANNER ===================== -->
   <section class="hero" id="inicio">
+
+    <canvas class="hero-bg-canvas" id="heroBgCanvas" aria-hidden="true"></canvas>
+
     <div class="hero-inner">
-
-      <div class="hero-photo">
-        <div class="hero-photo-frame">
-          <img src="img/sara/sara-retrato.jpg" alt="Retrato profissional de Sara Godner" loading="eager"
-               onerror="this.closest('.hero-photo-frame').classList.add('img-missing')">
-          <div class="hero-photo-fallback" aria-hidden="true">
-            <span>S G</span>
-          </div>
-        </div>
-        <div class="hero-photo-caption">Colatina, Espírito Santo</div>
-      </div>
-
       <div class="hero-content">
-        <p class="hero-kicker">Graduanda em Direito</p>
-        <h1 class="hero-name">Sara<br>Godner</h1>
+        <span class="hero-symbol" aria-hidden="true">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <line x1="32" y1="6" x2="32" y2="52" />
+            <circle cx="32" cy="9" r="2.6" />
+            <line x1="12" y1="15" x2="52" y2="15" />
+            <line x1="12" y1="15" x2="12" y2="27" />
+            <line x1="52" y1="15" x2="52" y2="27" />
+            <path d="M5 27 A7 7 0 0 0 19 27 Z" />
+            <path d="M45 27 A7 7 0 0 0 59 27 Z" />
+            <line x1="32" y1="52" x2="32" y2="56" />
+            <rect x="17" y="56" width="30" height="3.4" rx="1" />
+          </svg>
+        </span>
+        <h1 class="hero-name">𝒮𝒶𝓇𝒶 𝒢ℴ𝓁𝒹𝓃ℯ𝓇</h1>
         <p class="hero-tagline">Graduanda em Direito pela UNESC | Estagiária no Fórum de Colatina/ES</p>
         <p class="hero-desc">
           Construindo, dia após dia, uma base sólida de estudo e prática jurídica —
@@ -114,8 +90,8 @@
           <a href="#contato" class="btn btn-ghost">Entre em contato</a>
         </div>
       </div>
-
     </div>
+
     <div class="hero-scroll" aria-hidden="true">
       <span class="hero-scroll-line"></span>
     </div>
@@ -125,7 +101,7 @@
   <section class="about" id="sobre">
     <div class="section-inner about-grid">
 
-      <div class="about-photos">
+      <div class="about-photos" data-reveal>
         <div class="about-photo about-photo--a">
           <img src="img/sara/sara-forum.jpg" alt="Sara Godner em atividade no Fórum de Colatina/ES"
                onerror="this.parentElement.classList.add('img-missing')">
@@ -136,7 +112,7 @@
         </div>
       </div>
 
-      <div class="about-text">
+      <div class="about-text" data-reveal>
         <p class="eyebrow">Sobre Sara</p>
         <h2>Do banco da faculdade ao <em>balcão do fórum</em></h2>
         <p>
@@ -173,7 +149,7 @@
   <!-- ===================== ÁREAS DE ATUAÇÃO ===================== -->
   <section class="services" id="atuacao">
     <div class="section-inner">
-      <div class="services-head">
+      <div class="services-head" data-reveal>
         <p class="eyebrow eyebrow--light">Áreas de atuação</p>
         <h2>Onde Sara tem dedicado seus estudos</h2>
         <p class="services-intro">
@@ -185,7 +161,7 @@
 
       <div class="services-grid">
 
-        <article class="service-card">
+        <article class="service-card" data-reveal>
           <span class="service-icon" aria-hidden="true">
             <svg viewBox="0 0 40 40"><path d="M8 10h24M8 20h24M8 30h16" stroke-linecap="round"/></svg>
           </span>
@@ -193,7 +169,7 @@
           <p>Acompanhamento de audiências e rotina cartorária no Fórum de Colatina/ES, com suporte direto às atividades do dia a dia forense.</p>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" data-reveal>
           <span class="service-icon" aria-hidden="true">
             <svg viewBox="0 0 40 40"><circle cx="17" cy="17" r="10"/><line x1="25" y1="25" x2="34" y2="34" stroke-linecap="round"/></svg>
           </span>
@@ -201,7 +177,7 @@
           <p>Levantamento de jurisprudência, doutrina e legislação aplicada, com foco na fundamentação cuidadosa de cada análise.</p>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" data-reveal>
           <span class="service-icon" aria-hidden="true">
             <svg viewBox="0 0 40 40"><rect x="9" y="6" width="22" height="28" rx="1"/><line x1="14" y1="14" x2="26" y2="14"/><line x1="14" y1="20" x2="26" y2="20"/><line x1="14" y1="26" x2="21" y2="26"/></svg>
           </span>
@@ -209,7 +185,7 @@
           <p>Elaboração de peças de estudo, organização documental e apoio processual sob orientação, dentro do estágio no fórum.</p>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" data-reveal>
           <span class="service-icon" aria-hidden="true">
             <svg viewBox="0 0 40 40"><path d="M20 6 L20 34 M8 34h24" stroke-linecap="round"/><path d="M20 6 L10 16 A10 10 0 0 0 30 16 Z"/></svg>
           </span>
@@ -217,7 +193,7 @@
           <p>Participação ativa na graduação em Direito pela UNESC, com dedicação às disciplinas de processo, prática jurídica e ética.</p>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" data-reveal>
           <span class="service-icon" aria-hidden="true">
             <svg viewBox="0 0 40 40"><path d="M8 30 L16 18 L24 24 L32 10" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 10h6v6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
@@ -225,7 +201,7 @@
           <p>Construção gradual de competências técnicas e comportamentais para a futura atuação na advocacia e nas carreiras jurídicas.</p>
         </article>
 
-        <article class="service-card">
+        <article class="service-card" data-reveal>
           <span class="service-icon" aria-hidden="true">
             <svg viewBox="0 0 40 40"><circle cx="20" cy="14" r="6"/><path d="M8 34c0-7 5-11 12-11s12 4 12 11" stroke-linecap="round"/></svg>
           </span>
@@ -241,7 +217,7 @@
   <section class="contact" id="contato">
     <div class="section-inner contact-grid">
 
-      <div class="contact-info">
+      <div class="contact-info" data-reveal>
         <p class="eyebrow eyebrow--light">Contato</p>
         <h2>Vamos conversar</h2>
         <p class="contact-lead">
@@ -269,7 +245,7 @@
         </ul>
       </div>
 
-      <form class="contact-form" id="contactForm" novalidate>
+      <form class="contact-form" id="contactForm" novalidate data-reveal>
         <div class="form-row">
           <label for="nome">Nome</label>
           <input type="text" id="nome" name="nome" autocomplete="name" required>
