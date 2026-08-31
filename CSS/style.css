@@ -222,6 +222,111 @@ button { font-family: inherit; cursor: pointer; }
 }
 
 /* ==========================================================================
+   Capa (cover)
+   ========================================================================== */
+.site-cover {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse 900px 700px at 50% 38%, rgba(2, 16, 86, 0.55), transparent 65%),
+    linear-gradient(180deg, var(--blue-dark) 0%, var(--blue-deep) 100%);
+  overflow: hidden;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.65s var(--ease), transform 0.65s var(--ease), visibility 0s linear 0.65s;
+}
+.site-cover.is-fading {
+  opacity: 0;
+  transform: translateY(-3%) scale(0.97);
+}
+.site-cover.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.site-cover-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: screen;
+}
+
+.site-cover-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 1.5rem;
+}
+
+.site-cover-monogram {
+  font-family: var(--font-display);
+  font-size: clamp(5.5rem, 19vw, 11.5rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--gold);
+  text-shadow:
+    0 0 40px rgba(242, 200, 50, 0.35),
+    0 0 100px rgba(242, 200, 50, 0.18);
+}
+
+.site-cover-script {
+  margin-top: 0.85rem;
+  font-family: var(--font-display), serif;
+  font-size: clamp(1.15rem, 2.8vw, 1.7rem);
+  letter-spacing: 0.04em;
+  color: var(--off-white);
+  opacity: 0.88;
+}
+
+.site-cover-subtitle {
+  margin-top: 0.6rem;
+  font-family: Calibri, "Segoe UI", var(--font-body);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  color: rgba(246, 243, 234, 0.7);
+}
+
+.site-cover-scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: rgba(246, 243, 234, 0.55);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.site-cover-scroll span {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold-light), transparent);
+  animation: coverScrollLine 1.9s ease-in-out infinite;
+}
+@keyframes coverScrollLine {
+  0%, 100% { transform: scaleY(0.35); opacity: 0.4; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .site-cover-monogram { font-size: clamp(4.5rem, 24vw, 7rem); }
+  .site-cover-script { font-size: clamp(1rem, 5vw, 1.3rem); }
+}
+
+/* ==========================================================================
    Hero
    ========================================================================== */
 .hero {

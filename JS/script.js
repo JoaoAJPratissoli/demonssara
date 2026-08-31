@@ -40,6 +40,105 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.innerWidth > 960) closeMobileNav();
   });
 
+  /* Capa (cover) — some suavemente ao rolar a tela */
+  const cover = document.getElementById("siteCover");
+  if (cover) {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const threshold = 8; // px de rolagem para começar a sumir
+    let hideTimeout;
+
+    const updateCover = () => {
+      const shouldFade = window.scrollY > threshold;
+      cover.classList.toggle("is-fading", shouldFade);
+
+      clearTimeout(hideTimeout);
+      if (shouldFade) {
+        hideTimeout = setTimeout(() => cover.classList.add("is-hidden"), reduceMotion ? 0 : 650);
+      } else {
+        cover.classList.remove("is-hidden");
+      }
+    };
+
+    updateCover();
+    window.addEventListener("scroll", updateCover, { passive: true });
+
+    /* Efeito "flare" — partículas douradas + glow pulsante */
+    const canvas = document.getElementById("coverCanvas");
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      let width, height, dpr, particles, frame;
+
+      const makeParticle = () => ({
+        x: Math.random() * width,
+        y: height + Math.random() * height * 0.3,
+        r: Math.random() * 1.6 + 0.4,
+        speed: Math.random() * 0.32 + 0.08,
+        drift: (Math.random() - 0.5) * 0.25,
+        alpha: Math.random() * 0.5 + 0.15,
+        twinkle: Math.random() * Math.PI * 2,
+      });
+
+      const resize = () => {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = canvas.clientWidth;
+        height = canvas.clientHeight;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+
+      const initParticles = () => {
+        const count = Math.min(Math.round((width * height) / 15000), 130);
+        particles = Array.from({ length: count }, makeParticle);
+      };
+
+      const draw = () => {
+        ctx.clearRect(0, 0, width, height);
+
+        const glowX = width / 2;
+        const glowY = height * 0.4;
+        const glow = ctx.createRadialGradient(glowX, glowY, 0, glowX, glowY, Math.max(width, height) * 0.55);
+        glow.addColorStop(0, "rgba(242, 200, 50, 0.22)");
+        glow.addColorStop(0.5, "rgba(2, 16, 86, 0.10)");
+        glow.addColorStop(1, "rgba(0, 0, 38, 0)");
+        ctx.fillStyle = glow;
+        ctx.fillRect(0, 0, width, height);
+
+        particles.forEach((p) => {
+          p.y -= p.speed;
+          p.x += p.drift;
+          p.twinkle += 0.02;
+          if (p.y < -10) Object.assign(p, makeParticle(), { y: height + 10 });
+
+          const twinkleAlpha = p.alpha * (0.6 + 0.4 * Math.sin(p.twinkle));
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(247, 218, 89, ${twinkleAlpha})`;
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        });
+
+        if (!reduceMotion) frame = requestAnimationFrame(draw);
+      };
+
+      resize();
+      initParticles();
+      draw();
+
+      window.addEventListener("resize", () => {
+        resize();
+        initParticles();
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          cancelAnimationFrame(frame);
+        } else if (!reduceMotion) {
+          frame = requestAnimationFrame(draw);
+        }
+      });
+    }
+  }
+
   /* Formulário de contato (demonstração — sem backend configurado) */
   const form = document.getElementById("contactForm");
   const status = document.getElementById("formStatus");
